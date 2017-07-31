@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="" href="./index.css">
+    <script src="https://unpkg.com/vue@2.4.2"></script>  
+</head>
+<body>
+    <div class="page-top">
+        <div class="page-content">
+            <h2>计划列表</h2>
+        </div>
+    </div>
+    <div class='main'>
+        <h3 class=big-title>添加任务：</h3>
+        <input type="text" class="task-input" v-model="inputValue" @keyup.enter="addTodo">
+        <ul class="task-count">
+            <li>{{filterList}}个任务未完成</li>
+            <li class="action">
+                <a href="#all">所有任务</a>
+                <a href="#unfinish">未完成任务</a>
+                <a href="#finish">完成任务</a>
+            </li>
+        </ul>
+        <h3 class="big-title">任务列表：</h3>
+        <div class="tasks">
+            <span class="no-task-tip" v-show="!list.length">未添加任何项目</span>
+            <ul class="todo-list">      <!-- filterCheck  是通过hash 筛选完的-->
+                <li class="list" v-for="item in filterCheck" :class="{completed:item.checked,editing:editingtodo==item}">
+                    <div class="view">
+                        <input type="checkbox" class="toggle" v-model="item.checked">
+                        <label @dblclick="editTodo(item)">{{item.title}}</label>
+                        <button class="destroy" @click="deleteTodo(item)"></button>
+                    </div>                          <!--绑定一个自定义的一个属性 -->
+                    <input type="text" class="edit" v-focus="editingtodo  === item" v-model="item.title" @keyup.enter="editedTodo" @blur="editedTodo"@keyup.esc="cancelEdit(item)">
+                </li>
+            </ul>
+        </div>
+    </div>
+     <script src="todolist.js"></script> 
+</body>
+</html>
